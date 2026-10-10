@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_maintenance_ticket_user,access.maintenance.ticket.user,model_maintenance_ticket,base.group_user,1,1,1,1
+access_responsible_user_user,access.responsible.user.user,model_responsible_user,base.group_user,1,1,1,1
+access_maintenance_model_user,access.maintenance.model.user,model_maintenance_model,base.group_user,1,1,1,1
+access_visit_details_user,access.visit.details.user,model_visit_details,base.group_user,1,1,1,1

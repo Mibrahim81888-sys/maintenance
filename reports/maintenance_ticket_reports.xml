@@ -1,0 +1,53 @@
+<odoo>
+    <data>
+        <template id="report_maintenance_ticket_document">
+            <t t-call="web.external_layout">
+                <t t-foreach="docs" t-as="o">
+                    <main>
+                        <div class="page">
+                            <h2>Maintenance Ticket: <span t-field="o.name"/></h2>
+                            <div class="row mt32 mb32">
+                                <div class="col-6">
+                                    <strong>Customer:</strong> <span t-field="o.customer_id"/><br/>
+                                    <strong>Model:</strong> <span t-field="o.model_id"/><br/>
+                                </div>
+                                <div class="col-6">
+                                    <strong>Responsible:</strong> <span t-field="o.responsible_id"/><br/>
+                                    <strong>Status:</strong> <span t-field="o.status"/><br/>
+                                </div>
+                            </div>
+
+                            <h3>Visit Details</h3>
+                            <table class="table table-sm o_main_table">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-foreach="o.visit_ids" t-as="visit">
+                                        <tr>
+                                            <td><span t-field="visit.name"/></td>
+                                            <td><span t-field="visit.date"/></td>
+                                        </tr>
+                                    </t>
+                                </tbody>
+                            </table>
+                        </div>
+                    </main>
+                </t>
+            </t>
+        </template>
+
+        <record id="action_report_maintenance_ticket" model="ir.actions.report">
+            <field name="name">Maintenance Ticket</field>
+            <field name="model">maintenance.ticket</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">maintenance.report_maintenance_ticket_document</field>
+            <field name="report_file">maintenance.report_maintenance_ticket_document</field>
+            <field name="binding_model_id" ref="model_maintenance_ticket"/>
+            <field name="binding_type">report</field>
+        </record>
+    </data>
+</odoo>

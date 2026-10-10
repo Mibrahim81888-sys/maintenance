@@ -1,0 +1,104 @@
+<odoo>
+    <data>
+        <record id="view_maintenance_ticket_form" model="ir.ui.view">
+            <field name="name">maintenance.ticket.form</field>
+            <field name="model">maintenance.ticket</field>
+            <field name="arch" type="xml">
+                <form string="Maintenance Ticket">
+                    <header>
+                        <button
+                            name="action_start"
+                            type="object"
+                            string="Start"
+                            class="oe_highlight"
+                            invisible="status != 'new'"/>
+                        <button
+                            name="action_cancel"
+                            type="object"
+                            string="Cancel"
+                            groups="maintenance.group_maintenance_cancel_ticket"
+                            invisible="status not in ('new', 'in_progress', 'done')"/>
+                        <field name="status" widget="statusbar" statusbar_visible="new,in_progress,done"/>
+                        <button
+                            name="action_done"
+                            type="object"
+                            string="Done"
+                            class="oe_highlight"
+                            invisible="status != 'in_progress'"/>
+                        <button
+                            name="action_reopen"
+                            type="object"
+                            string="Reopen"
+                            class="oe_highlight"
+                            invisible="status != 'cancel'"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name"/>
+                                <field name="customer_id"/>
+                            </group>
+                            <group>
+                                <field name="model_id"/>
+                                <field name="responsible_id"/>
+                            </group>
+                            <group>
+                                <field name="done_date" invisible="status == 'done'"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Visit Detalis">
+                                <field name="visit_ids">
+                                    <list editable="bottom">
+                                        <field name="name"/>
+                                        <field name="date"/>
+                                        
+                                    </list>
+                                </field>
+                                
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_maintenance_ticket_list" model="ir.ui.view">
+            <field name="name">maintenance.ticket.tree</field>
+            <field name="model">maintenance.ticket</field>
+            <field name="arch" type="xml">
+                <list string="Maintenance Tickets">
+                    <field name="name"/>
+                    <field name="customer_id"/>
+                    <field name="model_id"/>
+                    <field name="responsible_id"/>
+                    <field name="status" widget="badge"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="action_maintenance_ticket" model="ir.actions.act_window">
+            <field name="name">Maintenance Tickets</field>
+            <field name="res_model">maintenance.ticket</field>
+            <field name="view_mode">list,form</field>
+        </record>
+
+        <record id="action_responsible_user" model="ir.actions.act_window">
+            <field name="name">Responsible Users</field>
+            <field name="res_model">responsible.user</field>
+            <field name="view_mode">list,form</field>
+        </record>
+
+        <record id="action_maintenance_model" model="ir.actions.act_window">
+            <field name="name">Maintenance Models</field>
+            <field name="res_model">maintenance.model</field>
+            <field name="view_mode">list,form</field>
+        </record>
+
+        <menuitem id="maintenance_menu_root" name="Maintenance" sequence="10"/>
+        <menuitem id="maintenance_ticket_menu_root" name="Maintenance Tickets" parent="maintenance_menu_root" sequence="10"/>
+        <menuitem id="maintenance_ticket_menu" name="Tickets" parent="maintenance_ticket_menu_root" action="action_maintenance_ticket" sequence="20"/>
+        <menuitem id="responsible_user_menu" name="Responsible Users" parent="maintenance_menu_root" action="action_responsible_user" sequence="20"/>
+        <menuitem id="maintenance_model_menu" name="Models" parent="maintenance_menu_root" action="action_maintenance_model" sequence="30"/>
+    </data>
+</odoo>
